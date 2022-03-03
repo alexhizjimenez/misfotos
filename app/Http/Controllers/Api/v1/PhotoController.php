@@ -37,34 +37,6 @@ class PhotoController extends Controller
     //
   }
 
-
-  public function update(UpdatePhotoRequest $request, $id)
-  {
-    if ($request->ajax()) {
-      $photo = Photo::find($id);
-      if ($photo) {
-        if ($request->file('photo')) {
-          $pathPhoto = $request->photo->store('photos');
-          $image_path = public_path() . "/storage/" . $photo->photo;
-          if (File::exists($image_path)) File::delete($image_path);
-          $photo->photo = $pathPhoto;
-        }
-        $photo->title = $request->title;
-        $photo->description = $request->description;
-        $photo->category_id = $request->category_id;
-        $photo->date = Carbon::now();
-        $photo->user_id = $request->user_id;
-        $photo->save();
-        return response()->json(['success' => true, 'message' => __('message.update')]);
-      } else {
-        return response()->json([
-          'success' => false,
-          'message' => __('message.notFound')
-        ]);
-      }
-    }
-  }
-
   public function destroy(Request $request, $id)
   {
     if ($request->ajax()) {
@@ -107,6 +79,34 @@ class PhotoController extends Controller
           'success' => true,
           'message' => __('message.update')
         ]);
+      } else {
+        return response()->json([
+          'success' => false,
+          'message' => __('message.notFound')
+        ]);
+      }
+    }
+  }
+
+  public function updated(UpdatePhotoRequest $request)
+  {
+    if ($request->ajax()) {
+      $photo = Photo::find($request->id);
+      if ($photo) {
+        if ($request->file('photo')) {
+          $pathPhoto = $request->photo->store('photos');
+          $image_path = public_path() . "/storage/" . $photo->photo;
+          if (File::exists($image_path)) File::delete($image_path);
+          $photo->photo = $pathPhoto;
+        }
+        $photo->title = $request->title;
+        $photo->description = $request->description;
+        $photo->category_id = $request->category_id;
+        $photo->date = Carbon::now();
+        $photo->user_id = $request->user_id;
+        $photo->save();
+
+        return response()->json(['success' => true, 'message' => __('message.update')]);
       } else {
         return response()->json([
           'success' => false,

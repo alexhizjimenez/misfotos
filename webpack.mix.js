@@ -14,6 +14,7 @@ const mix = require("laravel-mix");
 mix
   .js("resources/js/app.js", "public/js")
   .js("resources/js/admin/formFotos.js", "public/js/admin/formFotos.js")
+  .js("resources/js/admin/editFoto.js", "public/js/admin/editFoto.js")
   .js("resources/js/admin/actionsFoto.js", "public/js/admin/actionsFoto.js")
   .sass("resources/sass/app.scss", "public/css")
   .sourceMaps();

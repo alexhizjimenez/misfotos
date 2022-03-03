@@ -22,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
   Route::apiResource('photo', PhotoController::class);
   Route::put('photo/status/{id}', [PhotoController::class, 'status']);
+  Route::post('photo/updated', [PhotoController::class, 'updated']);
 });

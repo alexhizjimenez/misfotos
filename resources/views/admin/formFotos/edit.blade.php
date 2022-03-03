@@ -6,6 +6,7 @@
       <div class="card-body">
         <form id="formFotos" name="formFotos" enctype="multipart/form-data">
           @csrf
+          @method('PUT')
           <div class="form-group">
             <label for="title">{{__('forms.title')}}</label>
             <input type="text" class="form-control" value="{{old('title',$photo->title)}}" id="title" name="title"
@@ -37,7 +38,7 @@
           <input type="hidden" id="user_id" name="user_id" value="{{Auth::id()}}">
           <hr>
           <button type="submit" id="update" class="btn btn-primary"
-            data-id="{{$photo->id}}">{{__('forms.save')}}</button>
+            data-id="{{$photo->id}}">{{__('forms.update')}}</button>
         </form>
       </div>
     </div>
@@ -45,5 +46,5 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{URL::asset('js/admin/formFotos.js')}}"></script>
+<script src="{{URL::asset('js/admin/editFoto.js')}}"></script>
 @endsection

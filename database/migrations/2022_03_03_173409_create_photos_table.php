@@ -20,7 +20,7 @@ class CreatePhotosTable extends Migration
       $table->string('title');
       $table->text('description');
       $table->date('date');
-      $table->text('photo');
+      $table->text('photo')->nullable();
       $table->boolean('status')->default(1);
       $table->foreignIdFor(Category::class);
       $table->foreignIdFor(User::class);
