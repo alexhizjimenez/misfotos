@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\PhotoController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,14 +24,12 @@ Route::middleware(['locale'])->group(function () {
 
 
 
-  Route::get('/', function () {
-    return redirect()->route('login');
-  });
+  Route::get('/', [WelcomeController::class, 'index']);
 
   Auth::routes();
 
-  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
   Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('form-fotos', [PhotoController::class, 'index'])->name('photo-form');
     Route::get('form-fotos-update/{id}', [PhotoController::class, 'edit'])->name('edit-form-foto');
   });

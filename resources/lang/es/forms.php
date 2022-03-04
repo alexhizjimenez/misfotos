@@ -20,4 +20,7 @@ return [
   'confirmPassword' => 'Confirmar contraseña',
   'logout' => 'Cerrar session',
   'addPhoto' => 'Agregar foto',
+  'forgot' => '
+¿Olvidaste tu contraseña?',
+  'remember' => 'Recuerdame',
 ];

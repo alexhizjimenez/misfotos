@@ -8,6 +8,7 @@ use App\Http\Requests\Photo\UpdatePhotoRequest;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
@@ -18,22 +19,29 @@ class PhotoController extends Controller
   public function store(AddPhotoRequest $request)
   {
     if ($request->ajax()) {
-      $pathPhoto = '';
-      if ($request->file('photo')) {
+      try {
+        DB::transaction(function () use ($request) {
+          $pathPhoto = '';
+          if ($request->file('photo')) {
 
-        $pathPhoto = $request->photo->store('photos');
-        //$ruta = storage_path() . "\app\public\miniatura/" . $pathPhoto;
-        //Image::make($request->file('photo'))->save($ruta);
+            $pathPhoto = $request->photo->store('photos');
+            $img = Image::make(storage_path() . '/app/public/' . $pathPhoto);
+            $img->resize(1024, 300);
+            $img->save(storage_path() . '/app/public/' . $pathPhoto);
+          }
+          $photo = new Photo();
+          $photo->title = $request->title;
+          $photo->description = $request->description;
+          $photo->category_id = $request->category_id;
+          $photo->date = Carbon::now();
+          $photo->user_id = $request->user_id;
+          $photo->photo = $pathPhoto;
+          $photo->save();
+        });
+        return response()->json(['success' => true, 'message' => __('message.add')]);
+      } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => $e->getMessage()]);
       }
-      $photo = new Photo();
-      $photo->title = $request->title;
-      $photo->description = $request->description;
-      $photo->category_id = $request->category_id;
-      $photo->date = Carbon::now();
-      $photo->user_id = $request->user_id;
-      $photo->photo = $pathPhoto;
-      $photo->save();
-      return response()->json(['success' => true, 'message' => __('message.add')]);
     }
   }
 
@@ -100,6 +108,9 @@ class PhotoController extends Controller
       if ($photo) {
         if ($request->file('photo')) {
           $pathPhoto = $request->photo->store('photos');
+          $img = Image::make(storage_path() . '/app/public/' . $pathPhoto);
+          $img->resize(1024, 300);
+          $img->save(storage_path() . '/app/public/' . $pathPhoto);
           $image_path = public_path() . "/storage/" . $photo->photo;
           if (File::exists($image_path)) File::delete($image_path);
           $photo->photo = $pathPhoto;

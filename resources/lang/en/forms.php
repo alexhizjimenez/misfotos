@@ -20,4 +20,6 @@ return [
   'confirmPassword' => 'Confirm password',
   'logout' => 'logout',
   'addPhoto' => 'Add Photo',
+  'forgot' => 'forgot your password?',
+  'remember' => 'remember me',
 ];

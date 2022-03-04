@@ -5,4 +5,5 @@ return [
   'notFound' => 'Registro no encontrado',
   'itemRelation' => 'Este elemento tiene relacion con otro elemento',
   'update' => 'Actualizado correctamente',
+  'error' => 'Error al guardar',
 ];
