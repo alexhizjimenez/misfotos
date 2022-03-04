@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\PhotoController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,14 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-  return view('welcome');
-});
+Route::get('/locale/{locale}', [HomeController::class, 'getLocale'])->name('getLocale');
+Route::middleware(['locale'])->group(function () {
+  if (session()->get('locale') == "") {
+    session()->put('locale', 'es');
+  }
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::middleware(['auth'])->group(function () {
-  Route::get('form-fotos', [PhotoController::class, 'index'])->name('photo-form');
-  Route::get('form-fotos-update/{id}', [PhotoController::class, 'edit'])->name('edit-form-foto');
+
+  Route::get('/', function () {
+    return redirect()->route('login');
+  });
+
+  Auth::routes();
+
+  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+  Route::middleware(['auth'])->group(function () {
+    Route::get('form-fotos', [PhotoController::class, 'index'])->name('photo-form');
+    Route::get('form-fotos-update/{id}', [PhotoController::class, 'edit'])->name('edit-form-foto');
+  });
 });

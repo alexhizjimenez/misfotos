@@ -26,7 +26,7 @@ class AddPhotoRequest extends FormRequest
     return [
       'title' => 'required|unique:photos,title',
       'description' => 'required',
-      'photo' => 'required|mimes:jpg,png|dimensions:max_width=300,max_height=200',
+      'photo' => 'required|mimes:jpg,png|dimensions:min_width=400,min_height=300',
       'category_id' => 'required',
       'user_id' => 'required',
     ];

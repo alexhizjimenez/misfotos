@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,6 @@ class HomeController extends Controller
    */
   public function __construct()
   {
-    $this->middleware('auth');
   }
 
   /**
@@ -27,5 +27,11 @@ class HomeController extends Controller
   {
     $photos = Photo::where('user_id', '=', Auth::id())->get();
     return view('home', compact('photos'));
+  }
+
+  public function getLocale($locale)
+  {
+    session()->put('locale', $locale);
+    return Redirect::back();
   }
 }

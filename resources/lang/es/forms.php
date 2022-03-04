@@ -12,4 +12,12 @@ return [
   'inactive' => 'Inactivar',
   'active' => 'Activar',
   'update' => 'Editar',
+  'email' => 'Correo electornico',
+  'password' => 'Contraseña',
+  'login' => 'Login',
+  'register' => 'Registro',
+  'name' => 'Nombre',
+  'confirmPassword' => 'Confirmar contraseña',
+  'logout' => 'Cerrar session',
+  'addPhoto' => 'Agregar foto',
 ];

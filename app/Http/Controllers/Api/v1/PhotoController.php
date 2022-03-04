@@ -9,6 +9,8 @@ use App\Models\Photo;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
+
 
 class PhotoController extends Controller
 {
@@ -18,7 +20,10 @@ class PhotoController extends Controller
     if ($request->ajax()) {
       $pathPhoto = '';
       if ($request->file('photo')) {
+
         $pathPhoto = $request->photo->store('photos');
+        //$ruta = storage_path() . "\app\public\miniatura/" . $pathPhoto;
+        //Image::make($request->file('photo'))->save($ruta);
       }
       $photo = new Photo();
       $photo->title = $request->title;

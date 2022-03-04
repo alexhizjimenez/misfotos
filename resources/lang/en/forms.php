@@ -12,4 +12,12 @@ return [
   'inactive' => 'Inactive',
   'active' => 'Active',
   'update' => 'Update',
+  'email' => 'Email',
+  'password' => 'Password',
+  'login' => 'Login',
+  'register' => 'Register',
+  'name' => 'Name',
+  'confirmPassword' => 'Confirm password',
+  'logout' => 'logout',
+  'addPhoto' => 'Add Photo',
 ];
